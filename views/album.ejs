@@ -1,4 +1,4 @@
-<link href="/<%= urlRoot %>/gallery.css" rel="stylesheet" type="text/css">
+<link href="/css/gallery.css" rel="stylesheet" type="text/css">
 
 <% if (!isRoot){ %>
   <nav class="breadcrumb">
@@ -7,7 +7,7 @@
   <% if (i==breadcrumb.length-1){ %>
   <%= breadcrumb[i].name %>
   <% }else{ %>
-  <a href="/<%= breadcrumb[i].url %>"> <%= breadcrumb[i].name %> &raquo; </a>
+  <a href="<%= breadcrumb[i].url %>"> <%= breadcrumb[i].name %> &raquo; </a>
   <% } %>
   <% } %>
 
@@ -20,14 +20,16 @@
   <h2>Albums</h2>
   <ul class="albums">
     <% albums.forEach(function(album){ %>
-      <li class="thumb">
-        <a href="/<%= album.url %>">
-          <figure>
-            <img src="/<%= album.thumbPath %>" alt="<%= album.name %>"/>
-            <figcaption><%= album.name %></figcaption>
-          </figure>
-        </a>
-      </li>
+      <% if (album.thumbPath){ %>
+        <li class="thumb">
+          <a href="/<%= album.url %>">
+            <figure>
+              <img src="/<%= album.thumbPath %>" alt="<%= album.name %>"/>
+              <figcaption><%= album.name %></figcaption>
+            </figure>
+          </a>
+        </li>
+      <% } %>
     <% }) %>
   </ul>
 <% } %>
@@ -39,7 +41,7 @@
       <li class="thumb">
         <a href="/<%= photo.url %>">
           <figure>
-            <img src="/<%= photo.src %>?tn=1" alt="<%= photo.name %>"/>
+            <img src="/<%= photo.path %>" alt="<%= photo.name %>"/>
             <figcaption><%= photo.name %></figcaption>
           </figure>
         </a>

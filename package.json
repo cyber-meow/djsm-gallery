@@ -19,12 +19,13 @@
     "gm": "^1.23.0",
     "imagemagick-stream": "^1.1.0",
     "memory-cache": "^0.2.0",
+    "mongoose": "^4.12.0",
     "underscore": "^1.8.3"
   },
   "scripts": {
     "test": "node test/test-gallery.js ; node test/test-album.js ; node test/test-photo.js",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore node_modules,package.json,package-lock.json --copy-files",
-    "start": "npm run build && node dist/examples/app.js"
+    "start": "npm run build && node dist/app.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
