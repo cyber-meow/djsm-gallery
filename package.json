@@ -1,0 +1,36 @@
+{
+  "author": "Cyber-meow",
+  "name": "node-gallery",
+  "description": "NodeJS Photo Gallery using directory structure & exif info to output a gallery",
+  "version": "1.1.0",
+  "homepage": "http://www.github.com/cianclarke/node-gallery",
+  "license": "MIT",
+  "repository": {
+    "url": ""
+  },
+  "main": "lib/gallery.js",
+  "engines": {
+    "node": ">=0.6.2"
+  },
+  "dependencies": {
+    "ejs": "^2.0.8",
+    "exif": "git://github.com/cianclarke/node-exif.git",
+    "express": "^4.10.7",
+    "gm": "^1.23.0",
+    "imagemagick-stream": "^1.1.0",
+    "memory-cache": "^0.2.0",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "test": "node test/test-gallery.js ; node test/test-album.js ; node test/test-photo.js",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore node_modules,package.json,package-lock.json --copy-files",
+    "start": "npm run build && node dist/examples/app.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "colors": "1.0.3",
+    "rimraf": "^2.6.2"
+  },
+  "subdomain": "node-gallery"
+}
