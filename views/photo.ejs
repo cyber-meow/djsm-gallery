@@ -1,3 +1,6 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" 
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="/css/gallery.css" rel="stylesheet" type="text/css">
 
 <nav class="breadcrumb">
@@ -15,9 +18,49 @@
 <h1 class="photo-title"><%= name %></h1>
 
 <figure class="photo">
-  <img src="<%= src %>" alt="<%= name%>">
+  <img src="<%= src %>?tn=0" alt="<%= name%>" data-zoom-image="<%= src %>"/>
   <figcaption>
     <%= name%>
   </figcaption>
 </figure>
 
+<button type="button">Favorite</button>
+
+<% if (JSON.parse(lastUrl)){ %>
+  <a href="<%= JSON.parse(lastUrl) %>"> Last </a>
+<% } %>
+
+<% if (JSON.parse(nextUrl)){ %>
+  <a href="<%= JSON.parse(nextUrl) %>"> Next </a>
+<% } %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
+
+<script>
+$('img').on('click', function () {
+  document.location.href = JSON.parse('<%- nextUrl %>');
+});
+</script> 
+
+<script>
+const nextKeys = [39, 40];
+const lastKeys = [37, 38];
+$(document).on('keypress', function (e) {
+  console.log(e.keyCode);
+  if (nextKeys.includes(e.keyCode) && JSON.parse('<%- nextUrl %>')) {
+    document.location.href = JSON.parse('<%- nextUrl %>');
+  }
+  if (lastKeys.includes(e.keyCode) && JSON.parse('<%- lastUrl %>')) {
+    document.location.href = JSON.parse('<%- lastUrl %>');
+  }
+});
+</script>
+
+<script>
+$('.photo img').ezPlus({
+  zoomType: 'lens',
+  lensShape: 'round',
+  lensSize: 400
+});
+</script>

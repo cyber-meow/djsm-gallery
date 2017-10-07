@@ -1,3 +1,7 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" 
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <link href="/css/gallery.css" rel="stylesheet" type="text/css">
 
 <% if (!isRoot){ %>
@@ -36,12 +40,14 @@
 
 <% if (photos.length>0){ %>
   <h2>Photos</h2>
+  <button id="thumb" type="button" onclick="noThumb()">Full Size</button>
   <ul class="photos">
     <% photos.forEach(function(photo){ %>
-      <li class="thumb">
+      <li class="thumb image-responsive">
         <a href="/<%= photo.url %>">
           <figure>
-            <img src="/<%= photo.path %>" alt="<%= photo.name %>"/>
+            <img src="/<%= photo.path %>" alt="<%= photo.name %>"
+                data-zoom-image="/<%= photo.path %>"/>
             <figcaption><%= photo.name %></figcaption>
           </figure>
         </a>
@@ -49,3 +55,33 @@
     <% }) %>
   </ul>
 <% } %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
+
+<script>
+function noThumb () {
+  $('.photos li').removeClass('thumb');
+  $('#thumb').html('No Zoom');
+  $('#thumb').attr('onclick', 'noZoom()');
+  $('.photos img').attr('src', (i, oldSrc) => oldSrc + '?tn=0');
+  $('.photos img').ezPlus({
+    zoomType: 'lens',
+    lensShape: 'round',
+    lensSize: 400
+  });
+};
+function noZoom () {
+  $('#thumb').html('Grid View');
+  $('#thumb').attr('onclick', 'addThumb()');
+  $('.photos img').removeData('elevateZoom');
+  $('.zoomWrapper img.zoomed').unwrap();
+  $('.zoomContainer').remove();
+  $('.photos img').attr('src', (i, oldSrc) => oldSrc.replace(/\?tn=0$/, ''));
+};
+function addThumb () {
+  $('.photos li').addClass('thumb');
+  $('#thumb').html('Full Size');
+  $('#thumb').attr('onclick', 'noThumb()');
+};
+</script>
