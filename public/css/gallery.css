@@ -38,6 +38,13 @@ ul li {
     padding: 6px 8px 50px;
 }
 
+.photo img {
+  max-width: 100%;
+  max-height: 90vh;
+  display: block;
+  margin: auto;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

@@ -24,7 +24,9 @@
   </figcaption>
 </figure>
 
-<button type="button">Favorite</button>
+<form method="post" action="/">
+  <button type="submit" name="filePath" value="<%= path %>">Favorite</button>
+</form>
 
 <% if (JSON.parse(lastUrl)){ %>
   <a href="<%= JSON.parse(lastUrl) %>"> Last </a>
@@ -39,7 +41,9 @@
 
 <script>
 $('img').on('click', function () {
-  document.location.href = JSON.parse('<%- nextUrl %>');
+  if (JSON.parse('<%- nextUrl %>')) {
+    document.location.href = JSON.parse('<%- nextUrl %>');
+  }
 });
 </script> 
 

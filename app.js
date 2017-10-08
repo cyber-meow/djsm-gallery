@@ -1,5 +1,8 @@
+import path from 'path';
+import fs from 'fs';
 import express from 'express';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import cache from 'memory-cache';
 import middleware from './lib/middleware';
 
@@ -45,6 +48,19 @@ app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/public`));
 
 app.use(middleware);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true,
+}));
+
+const favoritePath = '/media/yu-guan/DATA/pictures/本/favorite';
+const addToFavorite = function addFav(file) {
+  fs.copyFileSync(file, path.join(favoritePath, path.basename(file)));
+};
+app.post('/', (req) => {
+  addToFavorite(req.body.filePath);
+});
 
 app.listen(port, host);
 console.log(`node-gallery listening on ${host}:${port}`);

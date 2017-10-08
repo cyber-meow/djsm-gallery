@@ -13,6 +13,7 @@
     "node": ">=0.6.2"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "ejs": "^2.0.8",
     "exif": "git://github.com/cianclarke/node-exif.git",
     "express": "^4.10.7",
