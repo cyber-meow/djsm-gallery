@@ -1,14 +1,13 @@
 {
   "author": "Cyber-meow",
   "name": "node-gallery",
-  "description": "NodeJS Photo Gallery using directory structure & exif info to output a gallery",
-  "version": "1.1.0",
-  "homepage": "http://www.github.com/cianclarke/node-gallery",
+  "description": "A browser-based gallery that allowing one to view and manage locally stored doujinshis/images",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": {
     "url": ""
   },
-  "main": "lib/gallery.js",
+  "main": "app.js",
   "engines": {
     "node": ">=0.6.2"
   },
@@ -33,6 +32,5 @@
     "babel-preset-env": "^1.6.0",
     "colors": "1.0.3",
     "rimraf": "^2.6.2"
-  },
-  "subdomain": "node-gallery"
+  }
 }
