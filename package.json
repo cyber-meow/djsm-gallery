@@ -1,6 +1,6 @@
 {
   "author": "Cyber-meow",
-  "name": "node-gallery",
+  "name": "djsm-gallery",
   "description": "A browser-based gallery that allowing one to view and manage locally stored doujinshis/images",
   "version": "1.0.0",
   "license": "MIT",
@@ -14,7 +14,6 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "ejs": "^2.0.8",
-    "exif": "git://github.com/cianclarke/node-exif.git",
     "express": "^4.10.7",
     "gm": "^1.23.0",
     "imagemagick-stream": "^1.1.0",
