@@ -62,8 +62,7 @@
         <div class="photo-content">
           <a class="dbclick", href="/<%= photo.url %>">
             <figure>
-              <img src="/<%= photo.path %>" alt="<%= photo.name %>"
-                  data-zoom-image="/<%= photo.path %>"/>
+              <img src="/<%= photo.path %>" alt="<%= photo.name %>">
             </figure>
           </a>
         </div>
@@ -72,10 +71,10 @@
   </div>
 <% } %>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/web-animations.min.js"></script>
-<script src="js/hammer.min.js"></script>
-<script src="js/muuri.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<script src="https://unpkg.com/muuri@0.6.3/dist/muuri.min.js"></script>
 
 <script>
 $(document).ready(function() {
