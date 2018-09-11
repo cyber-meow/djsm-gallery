@@ -40,48 +40,81 @@
 
 <% if (photos.length>0){ %>
   <h2>Photos</h2>
-  <button id="thumb" type="button" onclick="noThumb()">Full Size</button>
-  <ul class="photos">
+  <div class="slidecontainer">
+    <p>Width: <span id="width"></span></p>
+    <input type="range" min="1" max="150"
+      value="13" class="slider" id="imgWidth">
+  </div>
+  <div class="slidecontainer">
+    <p>Height: <span id="height"></span></p>
+    <input type="range" min="1" max="150"
+      value="13" class="slider" id="imgHeight">
+  </div>
+  <div class="photos">
     <% photos.forEach(function(photo){ %>
-      <li class="thumb image-responsive">
-        <a href="/<%= photo.url %>">
-          <figure>
-            <img src="/<%= photo.path %>" alt="<%= photo.name %>"
-                data-zoom-image="/<%= photo.path %>"/>
-            <figcaption><%= photo.name %></figcaption>
-          </figure>
-        </a>
-      </li>
+      <div class="photo-in-album">
+        <div class="photo-content">
+          <a class="dbclick", href="/<%= photo.url %>">
+            <figure>
+              <img src="/<%= photo.path %>" alt="<%= photo.name %>"
+                  data-zoom-image="/<%= photo.path %>"/>
+            </figure>
+          </a>
+        </div>
+      </div>
     <% }) %>
-  </ul>
+  </div>
 <% } %>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<script src="https://unpkg.com/muuri@0.6.3/dist/muuri.min.js"></script>
 
 <script>
-function noThumb () {
-  $('.photos li').removeClass('thumb');
-  $('#thumb').html('No Zoom');
-  $('#thumb').attr('onclick', 'noZoom()');
-  $('.photos img').attr('src', (i, oldSrc) => oldSrc + '?tn=0');
-  $('.photos img').ezPlus({
-    zoomType: 'lens',
-    lensShape: 'round',
-    lensSize: 400
+$(document).ready(function() {
+  let grid = new Muuri(
+    '.photos',
+    {dragEnabled: true, layout: {fillGaps: true}});
+});
+</script>
+
+<script>
+jQuery(function($) {
+  $('.dbclick').click(function() {
+    return false;
+  }).dblclick(function() {
+    window.location = this.href;
+    return false;
+  }).keydown(function(event) {
+    switch (event.which) {
+      case 13: // Enter
+      case 32: // Space
+      window.location = this.href;
+      return false;
+    }
   });
-};
-function noZoom () {
-  $('#thumb').html('Grid View');
-  $('#thumb').attr('onclick', 'addThumb()');
-  $('.photos img').removeData('elevateZoom');
-  $('.zoomWrapper img.zoomed').unwrap();
-  $('.zoomContainer').remove();
-  $('.photos img').attr('src', (i, oldSrc) => oldSrc.replace(/\?tn=0$/, ''));
-};
-function addThumb () {
-  $('.photos li').addClass('thumb');
-  $('#thumb').html('Full Size');
-  $('#thumb').attr('onclick', 'noThumb()');
-};
+});
+</script>
+
+<script>
+let sliderW = document.getElementById("imgWidth");
+let outputW = document.getElementById("width");
+outputW.innerHTML = sliderW.value;
+$('.photos img').width(`${sliderW.value}vw`);
+sliderW.oninput = function() {
+  $('.photos img').width(`${this.value}vw`).height('auto');
+  outputW.innerHTML = this.value;
+}
+</script>
+
+<script>
+let sliderH = document.getElementById("imgHeight");
+let outputH = document.getElementById("height");
+outputH.innerHTML = sliderH.value;
+sliderH.oninput = function() {
+  $('.photos img').height(`${this.value}vh`).width('auto');
+  outputH.innerHTML = this.value;
+}
 </script>

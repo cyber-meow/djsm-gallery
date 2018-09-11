@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cache from 'memory-cache';
+import randomstring from 'randomstring';
 import middleware from './lib/middleware';
 
 const mongoDB = 'mongodb://localhost/doujinshi-manager';
@@ -56,10 +57,23 @@ app.use(bodyParser.urlencoded({
 
 const favoritePath = '/media/yu-guan/DATA/pictures/本/favorite';
 const addToFavorite = function addFav(file) {
-  fs.copyFileSync(file, path.join(favoritePath, path.basename(file)));
+  const filepathObj = path.parse(file);
+  fs.copyFile(
+    file,
+    path.join(
+      favoritePath,
+      filepathObj.name.concat(randomstring.generate()).concat(filepathObj.ext)),
+    (err) => { if (err) console.log(err); });
 };
-app.post('/', (req) => {
-  addToFavorite(req.body.filePath);
+app.post('*', (req, res) => {
+  if (req.body.filePath) {
+    addToFavorite(req.body.filePath);
+    res.redirect('back');
+  }
+  if (req.body.deleteFilePath) {
+    fs.unlink(req.body.deleteFilePath, (err) => { if (err) console.log(err); });
+    res.redirect('..');
+  }
 });
 
 app.listen(port, host);
