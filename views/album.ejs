@@ -41,12 +41,18 @@
 <% if (photos.length>0){ %>
   <h2>Photos</h2>
   <div class="slidecontainer">
-    <p>Width: <span id="width"></span></p>
+    <p>
+      Width: <span id="width"></span> &nbsp;
+      Absolute: <input type="checkbox" id="absWidth" onclick="absWidth()">
+    </p>
     <input type="range" min="1" max="150"
       value="13" class="slider" id="imgWidth">
   </div>
   <div class="slidecontainer">
-    <p>Height: <span id="height"></span></p>
+    <p>
+      Height: <span id="height"></span> &nbsp;
+      Absolute: <input type="checkbox" id="absHeight" onclick="absHeight()">
+    </p>
     <input type="range" min="1" max="150"
       value="13" class="slider" id="imgHeight">
   </div>
@@ -66,11 +72,10 @@
   </div>
 <% } %>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-<script src="https://unpkg.com/muuri@0.6.3/dist/muuri.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/web-animations.min.js"></script>
+<script src="js/hammer.min.js"></script>
+<script src="js/muuri.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -99,22 +104,48 @@ jQuery(function($) {
 </script>
 
 <script>
-let sliderW = document.getElementById("imgWidth");
-let outputW = document.getElementById("width");
+</script>
+
+<script>
+const sliderW = document.getElementById("imgWidth");
+const outputW = document.getElementById("width");
+let absW = false;
 outputW.innerHTML = sliderW.value;
 $('.photos img').width(`${sliderW.value}vw`);
 sliderW.oninput = function() {
-  $('.photos img').width(`${this.value}vw`).height('auto');
+  if ($('#absWidth').prop('checked')) {
+    $('.photos img').width(this.value*10).height('auto');
+  } else {
+    $('.photos img').width(`${this.value}vw`).height('auto');
+  }
   outputW.innerHTML = this.value;
+}
+function absWidth() {
+  if ($('#absWidth').prop('checked')) {
+    $('.photos img').width(sliderW.value*10).height('auto');
+  } else {
+    $('.photos img').width(`${sliderW.value}vw`).height('auto');
+  }
 }
 </script>
 
 <script>
-let sliderH = document.getElementById("imgHeight");
-let outputH = document.getElementById("height");
+const sliderH = document.getElementById("imgHeight");
+const outputH = document.getElementById("height");
 outputH.innerHTML = sliderH.value;
 sliderH.oninput = function() {
-  $('.photos img').height(`${this.value}vh`).width('auto');
+  if ($('#absHeight').prop('checked')) {
+    $('.photos img').height(this.value*10).width('auto');
+  } else {
+    $('.photos img').height(`${this.value}vh`).width('auto');
+  }
   outputH.innerHTML = this.value;
+}
+function absHeight() {
+  if ($('#absHeight').prop('checked')) {
+    $('.photos img').height(sliderH.value*10).width('auto');
+  } else {
+    $('.photos img').height(`${sliderH.value}vh`).width('auto');
+  }
 }
 </script>
